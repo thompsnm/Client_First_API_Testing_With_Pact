@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   version: "0.0.1"
-  title: Hello World App
+  title: Restaurant Type Service
 # during dev, should point to your local machine
 host: localhost:10010
 # basePath prefixes all resource paths 
@@ -42,6 +42,72 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /restaurant:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: restaurant
+    get:
+      description: Returns restaurant information to the caller
+      # used as the method name of the controller
+      operationId: restaurant
+      parameters:
+        - name: name
+          in: query
+          description: The name of the restaurant to return info for
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/RestaurantResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /types:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: types
+    get:
+      description: Returns types of restaurants to the caller
+      # used as the method name of the controller
+      operationId: types
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/TypesResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /type:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: type
+    get:
+      description: Returns restaurant of a given type to the caller
+      # used as the method name of the controller
+      operationId: type
+      parameters:
+        - name: type
+          in: query
+          description: The type of the restaurant to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/TypeResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -52,6 +118,31 @@ definitions:
     properties:
       message:
         type: string
+  RestaurantResponse:
+    required:
+      - name
+      - type
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+  TypesResponse:
+    required:
+      - types
+    properties:
+      types:
+        type: array
+        items:
+          type: string
+  TypeResponse:
+    required:
+      - names
+    properties:
+      names:
+        type: array
+        items:
+          type: string
   ErrorResponse:
     required:
       - message
