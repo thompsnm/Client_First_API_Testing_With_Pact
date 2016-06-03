@@ -1,0 +1,19 @@
+{
+  "name": "restaurant_chooser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thompsnm/Client_First_API_Testing_With_Pact.git"
+  },
+  "author": "Nathan Thompson <thompsnm@gmail.com> (https://github.com/thompsnm)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thompsnm/Client_First_API_Testing_With_Pact/issues"
+  },
+  "homepage": "https://github.com/thompsnm/Client_First_API_Testing_With_Pact#readme"
+}
