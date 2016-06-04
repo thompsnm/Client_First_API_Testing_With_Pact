@@ -28,38 +28,14 @@ describe('/restaurant', function() {
       /*eslint-enable*/
       api.get('/restaurant')
       .query({
-name: 'DATA GOES HERE'
+        name: 'Efrains'
       })
       .set('Accept', 'application/json')
       .expect(200)
-      .end(function(err, res) {
-        if (err) return done(err);
-
-        expect(validator.validate(res.body, schema)).to.be.true;
-        done();
-      });
-    });
-
-    it('should respond with default Error', function(done) {
-      /*eslint-disable*/
-      var schema = {
-        "required": [
-          "message"
-        ],
-        "properties": {
-          "message": {
-            "type": "string"
-          }
-        }
-      };
-
-      /*eslint-enable*/
-      api.get('/restaurant')
-      .query({
-name: 'DATA GOES HERE'
+      .expect({
+        "name": "Efrains",
+        "type": "Mexican"
       })
-      .set('Accept', 'application/json')
-      .expect('DEFAULT RESPONSE CODE HERE')
       .end(function(err, res) {
         if (err) return done(err);
 
