@@ -1,0 +1,19 @@
+{
+  "name": "restaurant-type-consumer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "type-client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nathan Thompson <thompsnm@gmail.com> (https://github.com/thompsnm)",
+  "license": "ISC",
+  "dependencies": {
+    "superagent": "^2.0.0"
+  },
+  "devDependencies": {
+    "@pact-foundation/pact-node": "^4.1.1",
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  }
+}
