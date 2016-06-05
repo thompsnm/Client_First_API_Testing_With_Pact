@@ -3,5 +3,5 @@ node_js:
   - "4.4.4"
 env:
   - TEST_DIR=restaurant-type-consumer
-install: cd $TEST_DIR && npm install
+install: cd $TEST_DIR && npm run travis_install
 script: npm test

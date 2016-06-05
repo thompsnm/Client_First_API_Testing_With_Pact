@@ -4,6 +4,7 @@
   "description": "",
   "main": "type-client.js",
   "scripts": {
+    "travis_install": "npm install && bower install",
     "test": "mocha"
   },
   "author": "Nathan Thompson <thompsnm@gmail.com> (https://github.com/thompsnm)",
