@@ -5,7 +5,7 @@ env:
   - TEST_DIR=restaurant-type-consumer
 before_install:
   sudo apt-get install ruby-full &&
-  sudo gem install bundler
+  gem install bundler
 install:
   cd $TEST_DIR &&
   npm run travis_install
