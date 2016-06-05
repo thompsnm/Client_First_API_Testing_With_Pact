@@ -9,11 +9,13 @@
   "author": "Nathan Thompson <thompsnm@gmail.com> (https://github.com/thompsnm)",
   "license": "ISC",
   "dependencies": {
+    "bower": "^1.7.9",
     "superagent": "^2.0.0"
   },
   "devDependencies": {
     "@pact-foundation/pact-node": "^4.1.1",
     "chai": "^3.5.0",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "xhr2": "^0.1.3"
   }
 }
