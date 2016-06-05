@@ -4,8 +4,7 @@ node_js:
 env:
   - TEST_DIR=restaurant-type-consumer
 before_install:
-  sudo apt-get install ruby-switch &&
-  ruby-switch --set ruby2.2 &&
+  sudo apt-get install ruby2.2 &&
   gem install bundler
 install:
   cd $TEST_DIR &&
