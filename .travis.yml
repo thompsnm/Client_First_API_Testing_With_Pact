@@ -4,6 +4,8 @@ node_js:
 env:
   - TEST_DIR=restaurant-type-consumer
 before_install:
+  sudo apt-add-repository ppa:brightbox/ruby-ng &&
+  sudo apt-get update &&
   sudo apt-get install ruby2.2 &&
   gem install bundler
 install:
