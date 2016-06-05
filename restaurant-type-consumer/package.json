@@ -4,7 +4,7 @@
   "description": "",
   "main": "type-client.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Nathan Thompson <thompsnm@gmail.com> (https://github.com/thompsnm)",
   "license": "ISC",
