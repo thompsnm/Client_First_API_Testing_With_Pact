@@ -4,9 +4,11 @@ node_js:
 env:
   - TEST_DIR=restaurant-type-consumer
 before_install:
-  sudo apt-add-repository ppa:brightbox/ruby-ng &&
-  sudo apt-get update &&
-  sudo apt-get install ruby2.2 &&
+  \curl -L https://get.rvm.io | bash -s stable &&
+  source ~/.bash_profile &&
+  rvm install ruby-2.2 &&
+  rvm list &&
+  rvm use --default ruby-2.2 &&
   gem install bundler
 install:
   cd $TEST_DIR &&
