@@ -3,5 +3,10 @@ node_js:
   - "4.4.4"
 env:
   - TEST_DIR=restaurant-type-consumer
-install: cd $TEST_DIR && npm run travis_install
+before_install:
+  sudo apt-get install ruby-full &&
+  sudo gem install bundler
+install:
+  cd $TEST_DIR &&
+  npm run travis_install
 script: npm test
