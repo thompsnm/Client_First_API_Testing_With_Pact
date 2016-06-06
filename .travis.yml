@@ -6,7 +6,6 @@ env:
 before_install:
   - rvm install 2.2.2
   - gem install bundler
-install:
+script:
   - cd $TEST_DIR
-  - npm run travis_install
-script: npm test
+  - npm test
