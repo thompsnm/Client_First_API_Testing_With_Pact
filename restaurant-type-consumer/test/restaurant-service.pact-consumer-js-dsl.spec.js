@@ -2,7 +2,7 @@ var request = require('superagent');
 var chai = require('chai');
 var expect = chai.expect;
 
-describe("pact-consumer-js-dsl", function() {
+describe("Restaurant service", function() {
   var client, restaurantTypeProvider;
   var Pact = require('../bower_components/pact-consumer-js-dsl/dist/pact-consumer-js-dsl.js')
 
@@ -26,9 +26,8 @@ describe("pact-consumer-js-dsl", function() {
     restaurantTypeProvider.resetSession();
   });
 
-  it("should say hello", function(done) {
+  it("types endpoint", function(done) {
     restaurantTypeProvider
-      .given("a set of restaurant types exists")
       .uponReceiving("a request for all restaurant types")
       .withRequest("get", "/types")
       .willRespondWith(200, {
