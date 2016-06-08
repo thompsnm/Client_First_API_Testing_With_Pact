@@ -5,7 +5,7 @@
   "main": "type-client.js",
   "scripts": {
     "pretest": "npm install && bower install && bundle install",
-    "test": "bundle exec pact-mock-service -p 1234 --pact-specification-version 2.0.0 -l log/pact.logs --pact-dir tmp/pacts & sleep 3s && mocha",
+    "test": "bundle exec pact-mock-service -p 1234 --pact-specification-version 1.0.1 -l log/pact.logs --pact-dir tmp/pacts & sleep 3s && mocha",
     "posttest": "bundle exec pact-mock-service stop -p 1234",
     "publish-pacts": "node pact-publisher.js"
   },

@@ -6,6 +6,9 @@ describe("pact-consumer-js-dsl", function() {
   var client, restaurantTypeProvider;
   var Pact = require('../bower_components/pact-consumer-js-dsl/dist/pact-consumer-js-dsl.js')
 
+  var somethingLike = Pact.Match.somethingLike;
+  var eachLike = Pact.Match.eachLike;
+
   before(function() {
     //ProviderClient is the class you have written to make the HTTP calls to the provider
     //client = new ProviderClient('http://localhost:1234');
@@ -39,7 +42,9 @@ describe("pact-consumer-js-dsl", function() {
         .get('http://localhost:1234/types')
         .end(function(err, res){
           expect(res.body).to.deep.equal({
-            "type": ["Italian", "Comfort Food"]
+            "types": eachLike({
+              type: somethingLike("Italian")
+            });
           });
           runComplete();
         });
