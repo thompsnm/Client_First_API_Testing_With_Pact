@@ -12,16 +12,18 @@
     "swagger-express-mw": "^0.1.0"
   },
   "devDependencies": {
+    "@pact-foundation/pact-node": "^4.2.1",
+    "chai": "^3.0.0",
+    "dotenv": "^1.2.0",
+    "mocha": "^2.2.5",
+    "request": "^2.58.0",
     "should": "^7.1.0",
     "supertest": "^1.0.0",
-    "z-schema": "^3.12.0",
-    "request": "^2.58.0",
-    "chai": "^3.0.0",
-    "mocha": "^2.2.5",
-    "dotenv": "^1.2.0"
+    "z-schema": "^3.12.0"
   },
   "scripts": {
     "start": "node app.js",
-    "test": "swagger project test"
+    "test": "swagger project test",
+    "verify-pacts": "swagger project start -m & sleep 5s && node ./test/pact/verify-pacts.js && pkill -f swagger"
   }
 }
