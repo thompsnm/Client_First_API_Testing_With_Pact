@@ -8,6 +8,9 @@ script:
   - cd restaurant-type-consumer
   - npm test
   - npm run publish-pacts
+  - cd ../restaurant-rating-consumer
+  - npm test
+  - npm run publish-pacts
   - cd ../restaurant-service
   - npm run install-dependencies
   - npm run start-mock
