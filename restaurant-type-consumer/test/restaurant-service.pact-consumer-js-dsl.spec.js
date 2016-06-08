@@ -10,8 +10,6 @@ describe("Restaurant service", function() {
   var eachLike = Pact.Match.eachLike;
 
   before(function() {
-    //ProviderClient is the class you have written to make the HTTP calls to the provider
-    //client = new ProviderClient('http://localhost:1234');
     restaurantTypeProvider = Pact.mockService({
       consumer: 'Restaurant Type Consumer',
       provider: 'Restaurant Service',
@@ -44,6 +42,59 @@ describe("Restaurant service", function() {
         .get('http://localhost:1234/types')
         .end(function(err, res){
           expect(res.body).to.deep.equal({ types: ["Italian"] });
+          runComplete();
+        });
+    });
+  });
+
+  it("type endpoint", function(done) {
+    restaurantTypeProvider
+      .uponReceiving("a request for all restaurants of a type")
+      .withRequest({
+        method: "get",
+        path: "/type",
+        query: {type: "Italian"}
+      })
+      .willRespondWith(200, {
+        "Content-Type": "application/json"
+      },
+      {
+        "names": eachLike(
+          somethingLike("Gondolier")
+        )
+      });
+
+    restaurantTypeProvider.run(done, function(runComplete) {
+      request
+        .get('http://localhost:1234/type?type=Italian')
+        .end(function(err, res){
+          expect(res.body).to.deep.equal({ names: ["Gondolier"] });
+          runComplete();
+        });
+    });
+  });
+
+  it("restaurant endpoint", function(done) {
+    restaurantTypeProvider
+      .uponReceiving("a request for information about a restaurant")
+      .withRequest({
+        method: "get",
+        path: "/restaurant",
+        query: {name: "Gondolier"}
+      })
+      .willRespondWith(200, {
+        "Content-Type": "application/json"
+      },
+      {
+        "name": somethingLike("Gondolier"),
+        "type": somethingLike("Italian")
+      });
+
+    restaurantTypeProvider.run(done, function(runComplete) {
+      request
+        .get('http://localhost:1234/restaurant?name=Gondolier')
+        .end(function(err, res){
+          expect(res.body).to.deep.equal({ name: "Gondolier", type: "Italian" });
           runComplete();
         });
     });
