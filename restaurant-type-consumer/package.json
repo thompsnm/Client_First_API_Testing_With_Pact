@@ -2,7 +2,7 @@
   "name": "restaurant-type-consumer",
   "version": "1.0.0",
   "description": "",
-  "main": "type-client.js",
+  "main": "",
   "scripts": {
     "pretest": "npm install && bower install && bundle install",
     "test": "bundle exec pact-mock-service -p 1234 --pact-specification-version 2.0.0 -l log/pact.logs --pact-dir tmp/pacts & sleep 3s && mocha",
