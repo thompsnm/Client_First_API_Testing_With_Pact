@@ -19,6 +19,7 @@
     "request": "^2.58.0",
     "should": "^7.1.0",
     "supertest": "^1.0.0",
+    "swagger": "^0.7.5",
     "z-schema": "^3.12.0"
   },
   "scripts": {
