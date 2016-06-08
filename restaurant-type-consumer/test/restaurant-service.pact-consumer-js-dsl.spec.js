@@ -34,16 +34,16 @@ describe("Restaurant service", function() {
         "Content-Type": "application/json"
       },
       {
-        "types": eachLike({
-          type: somethingLike("Italian")
-        })
+        "types": eachLike(
+          somethingLike("Italian")
+        )
       });
 
     restaurantTypeProvider.run(done, function(runComplete) {
       request
         .get('http://localhost:1234/types')
         .end(function(err, res){
-          expect(res.body).to.deep.equal({ types: [{type: "Italian"}] });
+          expect(res.body).to.deep.equal({ types: ["Italian"] });
           runComplete();
         });
     });
