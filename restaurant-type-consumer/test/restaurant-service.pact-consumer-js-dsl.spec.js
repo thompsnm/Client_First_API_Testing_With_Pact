@@ -33,19 +33,18 @@ describe("pact-consumer-js-dsl", function() {
       .withRequest("get", "/types")
       .willRespondWith(200, {
         "Content-Type": "application/json"
-      }, {
-        "type": ["Italian", "Comfort Food"]
+      },
+      {
+        "types": eachLike({
+          type: somethingLike("Italian")
+        })
       });
 
     restaurantTypeProvider.run(done, function(runComplete) {
       request
         .get('http://localhost:1234/types')
         .end(function(err, res){
-          expect(res.body).to.deep.equal({
-            "types": eachLike({
-              type: somethingLike("Italian")
-            })
-          });
+          expect(res.body).to.deep.equal(["Italian"]);
           runComplete();
         });
     });
