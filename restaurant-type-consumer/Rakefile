@@ -1,7 +1,0 @@
-require 'pact_broker/client/tasks'
-
-PactBroker::Client::PublicationTask.new do | task |
-  require 'tmp/pacts'
-  task.consumer_version = MyConsumer::VERSION
-  task.pact_broker_base_url = "http://pactbroker-1.8de890fb.cont.dockerapp.io"
-end
