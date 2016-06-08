@@ -1,0 +1,21 @@
+{
+  "name": "restaurant-type-consumer",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Nathan Thompson <thompsnm@gmail.com> (https://github.com/thompsnm)"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/thompsnm/Client_First_API_Testing_With_Pact",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pact-consumer-js-dsl": "^0.2.2"
+  }
+}

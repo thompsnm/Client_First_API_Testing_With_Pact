@@ -1,0 +1,24 @@
+{
+  "name": "restaurant-rating-consumer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "pretest": "npm install && bower install && bundle install",
+    "test": "bundle exec pact-mock-service -p 1234 --pact-specification-version 2.0.0 -l log/pact.logs --pact-dir tmp/pacts & sleep 3s && mocha",
+    "posttest": "bundle exec pact-mock-service stop -p 1234",
+    "publish-pacts": "node pact-publisher.js"
+  },
+  "author": "Nathan Thompson <thompsnm@gmail.com> (https://github.com/thompsnm)",
+  "license": "ISC",
+  "dependencies": {
+    "bower": "^1.7.9",
+    "superagent": "^2.0.0"
+  },
+  "devDependencies": {
+    "@pact-foundation/pact-node": "^4.1.1",
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3",
+    "xhr2": "^0.1.3"
+  }
+}
