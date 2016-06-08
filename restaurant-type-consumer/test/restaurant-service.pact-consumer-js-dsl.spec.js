@@ -44,7 +44,7 @@ describe("pact-consumer-js-dsl", function() {
           expect(res.body).to.deep.equal({
             "types": eachLike({
               type: somethingLike("Italian")
-            });
+            })
           });
           runComplete();
         });
