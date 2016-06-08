@@ -5,7 +5,8 @@
   "main": "type-client.js",
   "scripts": {
     "pretest": "npm install && bower install && bundle install",
-    "test": "bundle exec pact-mock-service -p 1234 --pact-specification-version 2.0.0 -l log/pact.logs --pact-dir tmp/pacts & MOCK_SERVICE_PID=$! && sleep 3s && mocha && kill $MOCK_SERVICE_PID"
+    "test": "bundle exec pact-mock-service -p 1234 --pact-specification-version 2.0.0 -l log/pact.logs --pact-dir tmp/pacts & sleep 3s && mocha",
+    "posttest": "bundle exec pact-mock-service stop -p 1234"
   },
   "author": "Nathan Thompson <thompsnm@gmail.com> (https://github.com/thompsnm)",
   "license": "ISC",
