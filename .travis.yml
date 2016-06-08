@@ -9,3 +9,4 @@ before_install:
 script:
   - cd $TEST_DIR
   - npm test
+  - rake pact:publish
