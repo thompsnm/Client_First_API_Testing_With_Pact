@@ -44,7 +44,7 @@ describe("pact-consumer-js-dsl", function() {
       request
         .get('http://localhost:1234/types')
         .end(function(err, res){
-          expect(res.body).to.deep.equal(["Italian"]);
+          expect(res.body).to.deep.equal({ types: [{type: "Italian"}] });
           runComplete();
         });
     });
