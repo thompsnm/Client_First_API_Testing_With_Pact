@@ -42,6 +42,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+
   /restaurant:
     # binds a127 app logic to a route
     x-swagger-router-controller: restaurant
@@ -66,6 +67,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+
   /types:
     # binds a127 app logic to a route
     x-swagger-router-controller: types
@@ -84,6 +86,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+
   /type:
     # binds a127 app logic to a route
     x-swagger-router-controller: type
@@ -108,8 +111,10 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+
   /swagger:
     x-swagger-pipe: swagger_raw
+
 # complex objects have schema definitions
 definitions:
   HelloWorldResponse:
@@ -118,6 +123,7 @@ definitions:
     properties:
       message:
         type: string
+
   RestaurantResponse:
     required:
       - name
@@ -127,6 +133,7 @@ definitions:
         type: string
       type:
         type: string
+
   TypesResponse:
     required:
       - types
@@ -135,6 +142,7 @@ definitions:
         type: array
         items:
           type: string
+
   TypeResponse:
     required:
       - names
@@ -143,6 +151,7 @@ definitions:
         type: array
         items:
           type: string
+
   ErrorResponse:
     required:
       - message
