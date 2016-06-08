@@ -28,7 +28,6 @@ describe("Restaurant service", function() {
 
   it("types endpoint", function(done) {
     restaurantTypeProvider
-      .given("a set of restaurant types exists")
       .uponReceiving("a request for all restaurant types")
       .withRequest("get", "/types")
       .willRespondWith(200, {
