@@ -9,5 +9,7 @@ script:
   - npm test
   - npm run publish-pacts
   - cd ../restaurant-service
+  - npm run install-dependencies
+  - npm run start-mock
   - npm run verify-pacts
 
