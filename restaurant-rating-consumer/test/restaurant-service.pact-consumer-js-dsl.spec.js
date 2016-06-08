@@ -24,4 +24,54 @@ describe("Restaurant service", function() {
     restaurantTypeProvider.resetSession();
   });
 
+  it("restaurant endpoint", function(done) {
+    restaurantTypeProvider
+      .uponReceiving("a request for information about a restaurant")
+      .withRequest({
+        method: "get",
+        path: "/restaurant",
+        query: {name: "Gondolier"}
+      })
+      .willRespondWith(200, {
+        "Content-Type": "application/json"
+      },
+      {
+        "name": somethingLike("Gondolier"),
+        "rating": somethingLike(5)
+      });
+
+    restaurantTypeProvider.run(done, function(runComplete) {
+      request
+        .get('http://localhost:1234/restaurant?name=Gondolier')
+        .end(function(err, res){
+          expect(res.body).to.deep.equal({ name: "Gondolier", rating: 5 });
+          runComplete();
+        });
+    });
+  });
+
+  it("highest rated endpoint", function(done) {
+    restaurantTypeProvider
+      .uponReceiving("a request for the name of the highest rated restaurant")
+      .withRequest({
+        method: "get",
+        path: "/restaurant"
+      })
+      .willRespondWith(200, {
+        "Content-Type": "application/json"
+      },
+      {
+        "name": somethingLike("Gondolier"),
+        "rating": somethingLike(5)
+      });
+
+    restaurantTypeProvider.run(done, function(runComplete) {
+      request
+        .get('http://localhost:1234/restaurant?name=Gondolier')
+        .end(function(err, res){
+          expect(res.body).to.deep.equal({ name: "Gondolier", rating: 5 });
+          runComplete();
+        });
+    });
+  });
 });
