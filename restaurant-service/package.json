@@ -27,7 +27,7 @@
     "test": "swagger project test",
     "install-dependencies": "npm install && bundle install",
     "start-mock": "swagger project start -m & sleep 5s",
-    "verify-pacts": "pact-provider-verifier --provider-base-url http://127.0.0.1:10010 --pact-urls http://pactbroker-1.8de890fb.cont.dockerapp.io/pacts/provider/Restaurant%20Service/consumer/Restaurant%20Type%20Consumer/latest",
+    "verify-pacts": "pact-provider-verifier --provider-base-url http://127.0.0.1:10010 --pact-urls http://pactbroker-1.8de890fb.cont.dockerapp.io/pacts/provider/Restaurant%20Service/consumer/Restaurant%20Type%20Consumer/latest,http://pactbroker-1.8de890fb.cont.dockerapp.io/pacts/provider/Restaurant%20Service/consumer/Restaurant%20Rating%20Consumer/latest",
     "stop-mock": "pkill -f swagger"
   }
 }
