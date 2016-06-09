@@ -112,6 +112,25 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /topRated:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: type
+    get:
+      description: Returns restaurant with the highest rating to the caller
+      # used as the method name of the controller
+      operationId: topRated
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/TopRatedResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   /swagger:
     x-swagger-pipe: swagger_raw
 
@@ -128,6 +147,7 @@ definitions:
     required:
       - name
       - type
+      - rating
     properties:
       name:
         type: string
@@ -153,6 +173,16 @@ definitions:
         type: array
         items:
           type: string
+
+  TopRatedResponse:
+    required:
+      - name
+      - rating
+    properties:
+      name:
+        type: string
+      rating:
+        type: integer
 
   ErrorResponse:
     required:
