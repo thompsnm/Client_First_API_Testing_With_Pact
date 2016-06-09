@@ -133,6 +133,8 @@ definitions:
         type: string
       type:
         type: string
+      rating:
+        type: integer
 
   TypesResponse:
     required:
