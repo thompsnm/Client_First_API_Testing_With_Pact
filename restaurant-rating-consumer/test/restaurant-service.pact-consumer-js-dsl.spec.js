@@ -50,12 +50,12 @@ describe("Restaurant service", function() {
     });
   });
 
-  it("highest rated endpoint", function(done) {
+  it("top rated endpoint", function(done) {
     restaurantTypeProvider
-      .uponReceiving("a request for the name of the highest rated restaurant")
+      .uponReceiving("a request for the name of the top rated restaurant")
       .withRequest({
         method: "get",
-        path: "/restaurant"
+        path: "/topRated"
       })
       .willRespondWith(200, {
         "Content-Type": "application/json"
