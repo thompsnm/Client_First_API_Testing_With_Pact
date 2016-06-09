@@ -67,7 +67,7 @@ describe("Restaurant service", function() {
 
     restaurantTypeProvider.run(done, function(runComplete) {
       request
-        .get('http://localhost:1234/restaurant?name=Gondolier')
+        .get('http://localhost:1234/topRated')
         .end(function(err, res){
           expect(res.body).to.deep.equal({ name: "Gondolier", rating: 5 });
           runComplete();
