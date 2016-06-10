@@ -41,6 +41,14 @@ The full build process is as follows:
 
 **NOTE:** With the Pact verifier already in place on the service, adding a new pact should be as simple as adding another argument.
 
-## Additional information on subprojects
+## Additional information about subprojects
 
 ...can be found in their individual READMEs.
+
+## Useful links
+
+- [Pact Homepage](http://docs.pact.io/)
+- [Pact 101](http://dius.com.au/2016/02/03/microservices-pact/)
+- [Regular expressions and type matching with Pact](https://github.com/realestate-com-au/pact/wiki/Regular-expressions-and-type-matching-with-Pact)
+- [Publishing and retrieving pacts](https://github.com/bethesque/pact_broker/wiki/Publishing-and-retrieving-pacts)
+- [Using Pact in conjunction with Swagger (OpenAPI)](https://github.com/pact-foundation/pact-specification/issues/28)
