@@ -40,3 +40,7 @@ The full build process is as follows:
 5. Verify the pact against the service
 
 **NOTE:** With the Pact verifier already in place on the service, adding a new pact should be as simple as adding another argument.
+
+## Additional information on subprojects
+
+...can be found in their individual READMEs.
