@@ -8,7 +8,7 @@ In order to run the Pact tests and generate the appropriate pact for publication
 
     $ npm test
 
-This npm script will handle installing _all_ dependencies, initialize a Pact mock server, run the tests, and write the associated pacts to `tmp/pacts`.
+This npm script will install _all_ dependencies, initialize a Pact mock server, run the tests, and write the associated pacts to `tmp/pacts`.
 
 ## Publishing the pacts
 
