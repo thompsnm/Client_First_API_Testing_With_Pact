@@ -14,4 +14,4 @@ This npm script will install _all_ dependencies, initialize a Pact mock server, 
 
 To publish the pacts to [the broker](http://pactbroker-1.8de890fb.cont.dockerapp.io/ui/relationships), simply run:
 
-    $ npm run prublish-pacts
+    $ npm run publish-pacts
