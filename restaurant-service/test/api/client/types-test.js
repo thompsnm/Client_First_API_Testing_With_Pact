@@ -37,7 +37,7 @@ describe('/types', function() {
       });
     });
 
-    it('should respond with default Error', function(done) {
+    xit('should respond with default Error', function(done) {
       /*eslint-disable*/
       var schema = {
         "required": [
