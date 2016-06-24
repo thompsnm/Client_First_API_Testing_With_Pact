@@ -34,7 +34,8 @@ describe('/restaurant', function() {
       .expect(200)
       .expect({
         "name": "Efrains",
-        "type": "Mexican"
+        "type": "Mexican",
+        "rating": 5
       })
       .end(function(err, res) {
         if (err) return done(err);

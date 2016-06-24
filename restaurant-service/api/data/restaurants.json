@@ -1,22 +1,27 @@
 [
   {
     "name": "Efrains",
-    "type": "Mexican"
+    "type": "Mexican",
+    "rating": 5
   },
   {
     "name": "The_Rio_Grande",
-    "type": "Mexican"
+    "type": "Mexican",
+    "rating": 4
   },
   {
     "name": "Pizza_Calore",
-    "type": "Pizza"
+    "type": "Pizza",
+    "rating": 3
   },
   {
     "name": "Dominos",
-    "type": "Pizza"
+    "type": "Pizza",
+    "rating": 1
   },
   {
     "name": "Khow_Thai",
-    "type": "Indian"
+    "type": "Indian",
+    "rating": 3
   }
 ]
