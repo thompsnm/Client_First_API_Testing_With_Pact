@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "pretest": "npm install && bower install && bundle install",
-    "test": "bundle exec pact-mock-service -p 1234 --pact-specification-version 2.0.0 -l log/pact.logs --pact-dir tmp/pacts & PID=$! && sleep 3s && mocha && kill $PID",
+    "test": "mocha",
     "publish-pacts": "node pact-publisher.js"
   },
   "author": "Nathan Thompson <thompsnm@gmail.com> (https://github.com/thompsnm)",
