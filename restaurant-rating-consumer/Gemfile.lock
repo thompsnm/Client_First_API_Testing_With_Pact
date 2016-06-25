@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    awesome_print (1.6.1)
+    awesome_print (1.7.0)
     diff-lcs (1.2.5)
     find_a_port (1.0.1)
     httparty (0.13.7)
@@ -9,21 +9,21 @@ GEM
       multi_xml (>= 0.5.2)
     json (1.8.3)
     multi_xml (0.5.5)
-    pact (1.9.1)
+    pact (1.9.2)
       awesome_print (~> 1.1)
       json
-      pact-mock_service (~> 0.7)
-      pact-support (~> 0.5)
+      pact-mock_service (~> 0.8)
+      pact-support (~> 0.5.7)
       rack-test (~> 0.6.2)
       randexp (~> 0.1.7)
       rspec (>= 2.14)
       term-ansicolor (~> 1.0)
       thor
       webrick
-    pact-mock_service (0.7.2)
+    pact-mock_service (0.10.0)
       find_a_port (~> 1.0.1)
       json
-      pact-support (~> 0.5.3)
+      pact-support (~> 0.5.8)
       rack
       rack-test (~> 0.6.2)
       rspec (>= 2.14)
@@ -39,10 +39,11 @@ GEM
       rspec (>= 2.14)
       term-ansicolor (~> 1.0)
       thor
-    pact_broker-client (1.0.1)
+    pact_broker-client (1.0.2)
       httparty
       json
       pact
+      term-ansicolor
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -70,7 +71,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  pact-mock_service (~> 0.7.0)
   pact_broker-client
 
 BUNDLED WITH
