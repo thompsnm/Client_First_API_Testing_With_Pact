@@ -1,3 +1,4 @@
+var path = require('path');
 var pact = require('@pact-foundation/pact-node');
 var request = require('superagent');
 var chai = require('chai');
@@ -14,9 +15,10 @@ describe("Restaurant service", function() {
 
   before(function(done) {
     var server = pact.createServer({
-      port: 1234,            // Port number that the server runs on, defaults to 1234
-      log: 'log/pact.logs',  // File to log output on relative to current working directory, defaults to none
-      dir: 'tmp/pacts'       // Directory to write the pact contracts relative to the current working directory, defaults to none
+      port: 1234,
+      log: path.resolve(process.cwd(), 'log', 'mockserver-integration.log'),
+      dir: path.resolve(process.cwd(), 'pacts'),
+      spec: 2
     });
     server.start().then(function() {
       done();
