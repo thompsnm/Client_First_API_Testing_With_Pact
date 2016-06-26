@@ -4,7 +4,7 @@
   "description": "",
   "main": "",
   "scripts": {
-    "pretest": "npm install && bower install && bundle install",
+    "pretest": "npm install && bower install",
     "test": "mocha",
     "publish-pacts": "node pact-publisher.js"
   },
