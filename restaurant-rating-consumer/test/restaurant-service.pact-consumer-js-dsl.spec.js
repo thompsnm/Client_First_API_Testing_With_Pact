@@ -1,57 +1,51 @@
 var path = require('path');
-var pact = require('@pact-foundation/pact-node');
+var wrapper = require('@pact-foundation/pact-node');
+var Pact = require('pact');
 var request = require('superagent');
 var chai = require('chai');
 var expect = chai.expect;
 
 describe("Restaurant service", function() {
-  var client, restaurantTypeProvider, server;
-  var Pact = require('../bower_components/pact-consumer-js-dsl/dist/pact-consumer-js-dsl.js')
+  var client, restaurantTypeProvider, server, pact;
 
-  var somethingLike = Pact.Match.somethingLike;
-  var eachLike = Pact.Match.eachLike;
+  var somethingLike = Pact.Matcher.somethingLike;
+  var eachLike = Pact.Matcher.eachLike;
 
   this.timeout(10000);
 
-  before(function(done) {
-    var server = pact.createServer({
-      port: 1234,
-      log: path.resolve(process.cwd(), 'log', 'mockserver-integration.log'),
-      dir: path.resolve(process.cwd(), 'pacts'),
-      spec: 2
-    });
+  var server = wrapper.createServer({
+    port: 1234,
+    log: path.resolve(process.cwd(), 'log', 'mockserver-integration.log'),
+    dir: path.resolve(process.cwd(), 'pacts'),
+    spec: 2
+  });
+
+  after(function() {
+    wrapper.removeAllServers();
+  });
+
+  beforeEach(function(done) {
     server.start().then(function() {
+      pact = Pact({ consumer: 'Restaurant Rating Consumer', provider: 'Restaurant Service' })
       done();
     });
   });
 
-  before(function() {
-    restaurantTypeProvider = Pact.mockService({
-      consumer: 'Restaurant Rating Consumer',
-      provider: 'Restaurant Service',
-      port: 1234,
-      done: function (error) {
-        expect(error).to.equal(null);
-      }
+  afterEach(function(done) {
+    server.delete().then(function() {
+      done();
     });
-
-    // This ensures your pact-mock-service is in a clean state before
-    // running your test suite.
-    restaurantTypeProvider.resetSession();
-  });
-
-  after(function() {
-    pact.removeAllServers();
   });
 
   it("restaurant endpoint", function(done) {
-    restaurantTypeProvider
+    pact
+      .interaction()
       .uponReceiving("a request for information about a restaurant")
-      .withRequest({
-        method: "get",
-        path: "/restaurant",
-        query: {name: "Gondolier"}
-      })
+      .withRequest(
+        "get",
+        "/restaurant",
+        {name: "Gondolier"}
+      )
       .willRespondWith(200, {
         "Content-Type": "application/json"
       },
@@ -60,23 +54,24 @@ describe("Restaurant service", function() {
         "rating": somethingLike(5)
       });
 
-    restaurantTypeProvider.run(done, function(runComplete) {
-      request
-        .get('http://localhost:1234/restaurant?name=Gondolier')
-        .end(function(err, res){
-          expect(res.body).to.deep.equal({ name: "Gondolier", rating: 5 });
-          runComplete();
-        });
-    });
+    pact.verify();
+
+    request
+      .get('http://localhost:1234/restaurant?name=Gondolier')
+      .end(function(err, res){
+        expect(res.body).to.deep.equal({ name: "Gondolier", rating: 5 });
+        done();
+      });
   });
 
   it("top rated endpoint", function(done) {
-    restaurantTypeProvider
+    pact
+      .interaction()
       .uponReceiving("a request for the name of the top rated restaurant")
-      .withRequest({
-        method: "get",
-        path: "/topRated"
-      })
+      .withRequest(
+        "get",
+        "/topRated"
+      )
       .willRespondWith(200, {
         "Content-Type": "application/json"
       },
@@ -85,13 +80,13 @@ describe("Restaurant service", function() {
         "rating": somethingLike(5)
       });
 
-    restaurantTypeProvider.run(done, function(runComplete) {
-      request
-        .get('http://localhost:1234/topRated')
-        .end(function(err, res){
-          expect(res.body).to.deep.equal({ name: "Gondolier", rating: 5 });
-          runComplete();
-        });
-    });
+    pact.verify();
+
+    request
+      .get('http://localhost:1234/topRated')
+      .end(function(err, res){
+        expect(res.body).to.deep.equal({ name: "Gondolier", rating: 5 });
+        done();
+      });
   });
 });
