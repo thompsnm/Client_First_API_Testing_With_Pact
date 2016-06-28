@@ -11,7 +11,6 @@
   "author": "Nathan Thompson <thompsnm@gmail.com> (https://github.com/thompsnm)",
   "license": "ISC",
   "dependencies": {
-    "bower": "^1.7.9",
     "superagent": "^2.0.0"
   },
   "devDependencies": {
