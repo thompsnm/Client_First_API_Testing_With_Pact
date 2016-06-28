@@ -1,0 +1,98 @@
+{
+  "consumer": {
+    "name": "Restaurant Type Consumer"
+  },
+  "provider": {
+    "name": "Restaurant Service"
+  },
+  "interactions": [
+    {
+      "description": "a request for all restaurant types",
+      "request": {
+        "method": "GET",
+        "path": "/types"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "types": [
+            "Italian"
+          ]
+        },
+        "matchingRules": {
+          "$.body.types": {
+            "min": 1
+          },
+          "$.body.types[*].*": {
+            "match": "type"
+          },
+          "$.body.types[*]": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for all restaurants of a type",
+      "request": {
+        "method": "GET",
+        "path": "/type",
+        "query": "type=Italian"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "names": [
+            "Gondolier"
+          ]
+        },
+        "matchingRules": {
+          "$.body.names": {
+            "min": 1
+          },
+          "$.body.names[*].*": {
+            "match": "type"
+          },
+          "$.body.names[*]": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for information about a restaurant",
+      "request": {
+        "method": "GET",
+        "path": "/restaurant",
+        "query": "name=Gondolier"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "name": "Gondolier",
+          "type": "Italian"
+        },
+        "matchingRules": {
+          "$.body.name": {
+            "match": "type"
+          },
+          "$.body.type": {
+            "match": "type"
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecificationVersion": "2.0.0"
+  }
+}

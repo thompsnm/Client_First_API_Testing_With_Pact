@@ -1,31 +1,41 @@
-var request = require('superagent');
+var path = require('path');
+var wrapper = require('@pact-foundation/pact-node');
+var Pact = require('pact');
+var Q = require('q');
+var request = require('superagent-promise')(require('superagent'), Q.Promise);
 var chai = require('chai');
 var expect = chai.expect;
 
 describe("Restaurant service", function() {
   var client, restaurantTypeProvider;
-  var Pact = require('../bower_components/pact-consumer-js-dsl/dist/pact-consumer-js-dsl.js')
 
-  var somethingLike = Pact.Match.somethingLike;
-  var eachLike = Pact.Match.eachLike;
+  var somethingLike = Pact.Matcher.somethingLike;
+  var eachLike = Pact.Matcher.eachLike;
 
-  before(function() {
-    restaurantTypeProvider = Pact.mockService({
-      consumer: 'Restaurant Type Consumer',
-      provider: 'Restaurant Service',
-      port: 1234,
-      done: function (error) {
-        expect(error).to.equal(null);
-      }
+  this.timeout(10000);
+
+  var pact = Pact({ consumer: 'Restaurant Type Consumer', provider: 'Restaurant Service' })
+
+  var server = wrapper.createServer({
+    port: 1234,
+    log: path.resolve(process.cwd(), 'log', 'mockserver-integration.log'),
+    dir: path.resolve(process.cwd(), 'pacts'),
+    spec: 2
+  });
+
+  before(function(done) {
+    server.start().then(function() {
+      done();
     });
+  });
 
-    // This ensures your pact-mock-service is in a clean state before
-    // running your test suite.
-    restaurantTypeProvider.resetSession();
+  after(function() {
+    wrapper.removeAllServers();
   });
 
   it("types endpoint", function(done) {
-    restaurantTypeProvider
+    pact
+      .interaction()
       .uponReceiving("a request for all restaurant types")
       .withRequest("get", "/types")
       .willRespondWith(200, {
@@ -37,24 +47,25 @@ describe("Restaurant service", function() {
         )
       });
 
-    restaurantTypeProvider.run(done, function(runComplete) {
-      request
+    pact.verify(function() {
+      return request
         .get('http://localhost:1234/types')
-        .end(function(err, res){
-          expect(res.body).to.deep.equal({ types: ["Italian"] });
-          runComplete();
-        });
+        .end(function(err, res){});
+    }).then(function(res) {
+      expect(JSON.parse(res)).to.deep.equal({ types: ["Italian"] });
+      done();
     });
   });
 
   it("type endpoint", function(done) {
-    restaurantTypeProvider
+    pact
+      .interaction()
       .uponReceiving("a request for all restaurants of a type")
-      .withRequest({
-        method: "get",
-        path: "/type",
-        query: {type: "Italian"}
-      })
+      .withRequest(
+        "get",
+        "/type",
+        {type: "Italian"}
+      )
       .willRespondWith(200, {
         "Content-Type": "application/json"
       },
@@ -64,24 +75,25 @@ describe("Restaurant service", function() {
         )
       });
 
-    restaurantTypeProvider.run(done, function(runComplete) {
-      request
+    pact.verify(function() {
+      return request
         .get('http://localhost:1234/type?type=Italian')
-        .end(function(err, res){
-          expect(res.body).to.deep.equal({ names: ["Gondolier"] });
-          runComplete();
-        });
+        .end(function(err, res){});
+    }).then(function(res) {
+      expect(JSON.parse(res)).to.deep.equal({ names: ["Gondolier"] });
+      done();
     });
   });
 
   it("restaurant endpoint", function(done) {
-    restaurantTypeProvider
+    pact
+      .interaction()
       .uponReceiving("a request for information about a restaurant")
-      .withRequest({
-        method: "get",
-        path: "/restaurant",
-        query: {name: "Gondolier"}
-      })
+      .withRequest(
+        "get",
+        "/restaurant",
+        {name: "Gondolier"}
+      )
       .willRespondWith(200, {
         "Content-Type": "application/json"
       },
@@ -90,13 +102,13 @@ describe("Restaurant service", function() {
         "type": somethingLike("Italian")
       });
 
-    restaurantTypeProvider.run(done, function(runComplete) {
-      request
+    pact.verify(function() {
+      return request
         .get('http://localhost:1234/restaurant?name=Gondolier')
-        .end(function(err, res){
-          expect(res.body).to.deep.equal({ name: "Gondolier", type: "Italian" });
-          runComplete();
-        });
+        .end(function(err, res){});
+    }).then(function(res) {
+      expect(JSON.parse(res)).to.deep.equal({ name: "Gondolier", type: "Italian" });
+      done();
     });
   });
 });
