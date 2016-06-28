@@ -9,7 +9,7 @@
     {
       "description": "a request for information about a restaurant",
       "request": {
-        "method": "get",
+        "method": "GET",
         "path": "/restaurant",
         "query": "name=Gondolier"
       },
@@ -35,7 +35,7 @@
     {
       "description": "a request for the name of the top rated restaurant",
       "request": {
-        "method": "get",
+        "method": "GET",
         "path": "/topRated"
       },
       "response": {

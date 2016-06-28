@@ -1,17 +1,20 @@
 var path = require('path');
 var wrapper = require('@pact-foundation/pact-node');
 var Pact = require('pact');
-var request = require('superagent');
+var Q = require('q');
+var request = require('superagent-promise')(require('superagent'), Q.Promise);
 var chai = require('chai');
 var expect = chai.expect;
 
 describe("Restaurant service", function() {
-  var client, restaurantTypeProvider, server, pact;
+  var client, restaurantTypeProvider, server;
 
   var somethingLike = Pact.Matcher.somethingLike;
   var eachLike = Pact.Matcher.eachLike;
 
   this.timeout(10000);
+
+  var pact = Pact({ consumer: 'Restaurant Rating Consumer', provider: 'Restaurant Service' })
 
   var server = wrapper.createServer({
     port: 1234,
@@ -20,21 +23,14 @@ describe("Restaurant service", function() {
     spec: 2
   });
 
+  before(function(done) {
+    server.start().then(function() {
+      done();
+    });
+  });
+
   after(function() {
     wrapper.removeAllServers();
-  });
-
-  beforeEach(function(done) {
-    server.start().then(function() {
-      pact = Pact({ consumer: 'Restaurant Rating Consumer', provider: 'Restaurant Service' })
-      done();
-    });
-  });
-
-  afterEach(function(done) {
-    server.delete().then(function() {
-      done();
-    });
   });
 
   it("restaurant endpoint", function(done) {
@@ -54,14 +50,14 @@ describe("Restaurant service", function() {
         "rating": somethingLike(5)
       });
 
-    pact.verify();
-
-    request
-      .get('http://localhost:1234/restaurant?name=Gondolier')
-      .end(function(err, res){
-        expect(res.body).to.deep.equal({ name: "Gondolier", rating: 5 });
-        done();
-      });
+    pact.verify(function() {
+      return request
+        .get('http://localhost:1234/restaurant?name=Gondolier')
+        .end(function(err, res) {});
+    }).then(function(res) {
+      expect(JSON.parse(res)).to.deep.equal({ name: "Gondolier", rating: 5 });
+      done();
+    });
   });
 
   it("top rated endpoint", function(done) {
@@ -80,13 +76,13 @@ describe("Restaurant service", function() {
         "rating": somethingLike(5)
       });
 
-    pact.verify();
-
-    request
-      .get('http://localhost:1234/topRated')
-      .end(function(err, res){
-        expect(res.body).to.deep.equal({ name: "Gondolier", rating: 5 });
-        done();
-      });
+    pact.verify(function() {
+      return request
+        .get('http://localhost:1234/topRated')
+        .end(function(err, res){});
+    }).then(function(res) {
+      expect(JSON.parse(res)).to.deep.equal({ name: "Gondolier", rating: 5 });
+      done();
+    });
   });
 });
