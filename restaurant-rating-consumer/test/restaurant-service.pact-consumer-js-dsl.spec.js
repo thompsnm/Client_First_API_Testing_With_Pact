@@ -14,7 +14,7 @@ describe("Restaurant service", function() {
 
   this.timeout(10000);
 
-  var pact = Pact({ consumer: 'Restaurant Rating Consumer', provider: 'Restaurant Service' })
+  var pact = Pact({ consumer: 'Restaurant Rating Consumer', provider: 'Restaurant Service' });
 
   var server = wrapper.createServer({
     port: 1234,
