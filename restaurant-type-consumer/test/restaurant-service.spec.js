@@ -4,13 +4,16 @@ var Pact = require('pact');
 var Q = require('q');
 var request = require('superagent-promise')(require('superagent'), Q.Promise);
 var chai = require('chai');
+var chaiAsPromised = require("chai-as-promised");
+
+chai.use(chaiAsPromised);
 var expect = chai.expect;
 
 describe("Restaurant service", function() {
   var client, restaurantTypeProvider;
 
-  var somethingLike = Pact.Matcher.somethingLike;
-  var eachLike = Pact.Matcher.eachLike;
+  var somethingLike = Pact.Matchers.somethingLike;
+  var eachLike = Pact.Matchers.eachLike;
 
   this.timeout(10000);
 
@@ -29,86 +32,96 @@ describe("Restaurant service", function() {
     });
   });
 
-  after(function() {
-    wrapper.removeAllServers();
+  after(function(done) {
+    pact.finalize().then(function() {
+      wrapper.removeAllServers();
+      done();
+    });
   });
 
   it("types endpoint", function(done) {
-    pact
-      .interaction()
-      .uponReceiving("a request for all restaurant types")
-      .withRequest("get", "/types")
-      .willRespondWith(200, {
-        "Content-Type": "application/json"
+    pact.addInteraction({
+      uponReceiving: "a request for all restaurant types",
+      withRequest: {
+        method: "get",
+        path: "/types"
       },
-      {
-        "types": eachLike(
-          somethingLike("Italian")
-        )
-      });
+      willRespondWith: {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+        body: {
+          "types": eachLike(
+            somethingLike("Italian")
+          )
+        }
+      }
+    }).then(function() {
 
-    pact.verify(function() {
-      return request
+      var verificationPromise = request
         .get('http://localhost:1234/types')
-        .end(function(err, res){});
-    }).then(function(res) {
-      expect(JSON.parse(res)).to.deep.equal({ types: ["Italian"] });
-      done();
+        .set({ 'Accept': 'application/json' })
+        .then(pact.verify);
+
+      expect(verificationPromise).to.eventually.equal(JSON.stringify({ types: ["Italian"] })).and.notify(done);
     });
   });
 
   it("type endpoint", function(done) {
-    pact
-      .interaction()
-      .uponReceiving("a request for all restaurants of a type")
-      .withRequest(
-        "get",
-        "/type",
-        {type: "Italian"}
-      )
-      .willRespondWith(200, {
-        "Content-Type": "application/json"
+    pact.addInteraction({
+      uponReceiving: "a request for all restaurants of a type",
+      withRequest: {
+        method: "get",
+        path: "/type",
+        query: "type=Italian"
       },
-      {
-        "names": eachLike(
-          somethingLike("Gondolier")
-        )
-      });
+      willRespondWith: {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {
+          "names": eachLike(
+            somethingLike("Gondolier")
+          )
+        }
+      }
+    }).then(function() {
 
-    pact.verify(function() {
-      return request
+      var verificationPromise = request
         .get('http://localhost:1234/type?type=Italian')
-        .end(function(err, res){});
-    }).then(function(res) {
-      expect(JSON.parse(res)).to.deep.equal({ names: ["Gondolier"] });
-      done();
+        .set({ 'Accept': 'application/json' })
+        .then(pact.verify);
+
+      expect(verificationPromise).to.eventually.equal(JSON.stringify({ names: ["Gondolier"] })).and.notify(done);
     });
   });
 
   it("restaurant endpoint", function(done) {
-    pact
-      .interaction()
-      .uponReceiving("a request for information about a restaurant")
-      .withRequest(
-        "get",
-        "/restaurant",
-        {name: "Gondolier"}
-      )
-      .willRespondWith(200, {
-        "Content-Type": "application/json"
+    pact.addInteraction({
+      uponReceiving: "a request for information about a restaurant",
+      withRequest: {
+        method: "get",
+        path: "/restaurant",
+        query: "name=Gondolier"
       },
-      {
-        "name": somethingLike("Gondolier"),
-        "type": somethingLike("Italian")
-      });
+      willRespondWith: {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {
+          "name": somethingLike("Gondolier"),
+          "type": somethingLike("Italian")
+        }
+      }
+    }).then(function() {
 
-    pact.verify(function() {
-      return request
+      var verificationPromise = request
         .get('http://localhost:1234/restaurant?name=Gondolier')
-        .end(function(err, res){});
-    }).then(function(res) {
-      expect(JSON.parse(res)).to.deep.equal({ name: "Gondolier", type: "Italian" });
-      done();
+        .set({ 'Accept': 'application/json' })
+        .then(pact.verify);
+
+      expect(verificationPromise).to.eventually.equal(JSON.stringify({ name: "Gondolier", type: "Italian" })).and.notify(done);
     });
   });
 });

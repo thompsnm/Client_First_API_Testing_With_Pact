@@ -16,6 +16,7 @@
   "devDependencies": {
     "@pact-foundation/pact-node": "^4.1.1",
     "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
     "mocha": "^2.5.3",
     "pact": "github:pact-foundation/pact-js",
     "q": "^1.4.1",
